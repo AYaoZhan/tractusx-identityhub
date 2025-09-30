@@ -63,8 +63,13 @@ helm install identityhub-memory charts/tractusx-identityhub-memory/ \
     --set "identityhub.image.repository=identityhub-memory" \
     --wait-for-jobs \
     --timeout=120s \
-    --dependency-update
+    --dependency-update \
+    --set "global.security.allowInsecureImages=true"
 ```
+
+> [!NOTE]
+> The parameter global.security.allowInsecureImages is set to true as a fix for helm deployment due to deprecated bitnami image
+> If the bitnami image is ever updated try to deploy without setting global.security.allowInsecureImages
 For helm chart options and configuration, see [Helm chart documentation](https://github.com/eclipse-tractusx/tractusx-identityhub/blob/main/charts/tractusx-identityhub-memory/README.md)
 
 ## Alternative ways to deploy identityhub-memory in localhost
