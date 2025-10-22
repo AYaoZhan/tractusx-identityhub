@@ -73,3 +73,11 @@ For more information, please see the Eclipse Committer Handbook:
 Contact the project developers via the project's "dev" list.
 
 * <https://accounts.eclipse.org/mailing-list/tractusx-dev>
+
+## NOTICE
+
+This work is licensed under the CC-BY-4.0.
+
+- SPDX-License-Identifier: CC-BY-4.0
+- SPDX-FileCopyrightText: 2025 Contributors to the Eclipse Foundation
+- Source URL: https://github.com/eclipse-tractusx/tractusx-identityhub
