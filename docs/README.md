@@ -18,7 +18,8 @@ To effectively work with this project, familiarity with the following technologi
 - Follow the [Installation Guide](../INSTALL.md) for local development setup
 - Test API endpoints using the provided Postman or Bruno collections
 
-> **Note:** When testing, it is recommended to enable ingress to avoid working with port-forwarding. Refer to the respective chart documentation for ingress configuration options, including hostname, TLS settings, and annotations.
+> [!NOTE]
+> When testing, it is recommended to enable ingress to avoid working with port-forwarding. Refer to the respective chart documentation for ingress configuration options, including hostname, TLS settings, and annotations.
 
 ## Documentation Resources
 

@@ -62,13 +62,15 @@ This project provides Helm charts for deploying both IdentityHub and IssuerServi
 
 To deploy using Helm charts, please refer to the documentation for each variant listed in the [Getting Started](#getting-started) section above. Each chart provides detailed configuration options, prerequisites, and deployment instructions.
 
-> **Note:** This project is still under heavy development. For the most up-to-date deployment experience, it is recommended to follow the [Localhost](#localhost) deployment instructions below.
+> [!NOTE]
+> This project is still under heavy development. For the most up-to-date deployment experience, it is recommended to follow the [Localhost](#localhost) deployment instructions below.
 
 ### Localhost
 
 For detailed deployment instructions in a localhost environment, please refer to the [Installation Guide](./INSTALL.md).
 
-> **Note:** While running the applications natively as Java processes or directly as Docker images is possible, it is highly recommended to deploy using the official Helm charts with PostgreSQL and HashiCorp Vault. The Helm chart deployment ensures proper configuration, security, and scalability.
+> [!NOTE]
+> While running the applications natively as Java processes or directly as Docker images is possible, it is highly recommended to deploy using the official Helm charts with PostgreSQL and HashiCorp Vault. The Helm chart deployment ensures proper configuration, security, and scalability.
 
 ## Developer Documentation
 
