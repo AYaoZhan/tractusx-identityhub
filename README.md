@@ -1,10 +1,10 @@
 
 # Tractus-X IdentityHub - a comprehensive DCP Wallet
 
-| [!WARNING] this project is under heavy development, expect bugs, problems and radical changes! |
-|------------------------------------------------------------------------------------------------|
+> [!WARNING]
+> This project is under heavy development, expect bugs, problems and radical changes!
 
-Welcome Contributor! Feel free to join our Identity Hub Weeklys if you want to contibute, or our office hours.
+Welcome Contributor! Feel free to join our Identity Hub Weeklys if you want to contribute, or our office hours.
 You will find the links here: https://eclipse-tractusx.github.io/community/open-meetings/#Identity%20Hub%20Weekly
 
 Also feel free to contact us on our matrix chat: https://matrix.to/#/#tractusx-identity-hub:matrix.eclipse.org
@@ -13,34 +13,66 @@ We are working at the moment to bring the current implemented functionalities fr
 
 ## About The Project
 
-The Tractus-X IdentityHub is a specialized variant of
-the [IdentityHub project](https://github.com/eclipse-edc/IdentityHub/).
-It contains a DCP CredentialService implementation and a SecureTokenService, preconfigured for use in Tractus-X.
+The Tractus-X IdentityHub is a specialized, production-ready distribution of the upstream [Eclipse EDC IdentityHub project](https://github.com/eclipse-edc/IdentityHub/), tailored specifically for the Catena-X/Tractus-X ecosystem.
 
-## Getting started
+This project provides deployable versions of two core components:
 
-As all Tractus-X applications, IdentityHub is distributed as helm chart, of which there are two variants:
+- **IdentityHub**: A comprehensive DCP (Decentralized Claims Protocol) wallet that manages verifiable credentials and decentralized identities
+- **IssuerService**: A service for issuing verifiable credentials to participants in the dataspace
 
-1. `tractusx-identityhub`: the recommended, production-ready version that uses PostgreSQL as database and Hashicorp
-   Vault as secret storage.
-2. `tractusx-identityhub-memory`: an ephemeral, memory-only version that stores data and secrets in memory. **Please
-   only use this for demo or testing purposes!**
+Both components implement the Decentralized Claims Protocol (DCP) specification, ensuring interoperability and standardized credential exchange within the Tractus-X ecosystem. The project offers ready-to-deploy Helm charts with PostgreSQL and HashiCorp Vault integration for production environments, as well as memory-based variants for development and testing.
 
-Please refer to the respective [documentation](./charts/tractusx-identityhub/README.md) for more information on how to
-run it.
+## Components
 
-As all Tractus-X applications, IssuerService is distributed as helm chart, of which there are two variants:
+### IdentityHub
 
-1. `tractusx-issuerservice`: the recommended, production-ready version that uses PostgreSQL as database and Hashicorp
-   Vault as secret storage.
-2. `tractusx-issuerservice-memory`: an ephemeral, memory-only version that stores data and secrets in memory. **Please
-   only use this for demo or testing purposes!**
+The IdentityHub serves as a comprehensive identity wallet and credential management system. Its primary purposes are:
 
-Please refer to the respective [documentation](./charts/tractusx-issuerservice/README.md) for more information on how to
-run it.
+- **Credential Storage**: Securely store and manage verifiable credentials received from issuers
+- **Identity Management**: Manage decentralized identities (DIDs) and their associated key pairs
+- **Credential Presentation**: Present credentials to verifiers during DCP flows
+- **Self-Issued Credentials**: Create and manage self-issued credentials
 
-> Note that running the application natively as Java process, or directly as Docker image is possible, but is not
-> supported by the Tractus-X IdentityHub team. Please use the official Helm chart.
+### IssuerService
+
+The IssuerService is responsible for the issuance of verifiable credentials to dataspace participants. Its primary purposes are:
+
+- **Credential Issuance**: Issue verifiable credentials to participants based on predefined credential definitions
+- **Attestation Management**: Define and manage attestation requirements for credential issuance
+- **Credential Lifecycle**: Handle the complete lifecycle of issued credentials, including revocation
+- **Standards Compliance**: Ensure all issued credentials comply with DCP specifications and dataspace policies
+
+## Getting Started
+
+This project provides Helm charts for deploying both IdentityHub and IssuerService components. Each component is available in two variants:
+
+### IdentityHub
+
+1. [`tractusx-identityhub`](./charts/tractusx-identityhub/README.md): The recommended, production-ready version that uses PostgreSQL as database and HashiCorp Vault as secret storage.
+2. [`tractusx-identityhub-memory`](./charts/tractusx-identityhub-memory/README.md): An ephemeral, memory-only version that stores data and secrets in memory. **Please only use this for demo or testing purposes!**
+
+### IssuerService
+
+1. [`tractusx-issuerservice`](./charts/tractusx-issuerservice/README.md): The recommended, production-ready version that uses PostgreSQL as database and HashiCorp Vault as secret storage.
+2. [`tractusx-issuerservice-memory`](./charts/tractusx-issuerservice-memory/README.md): An ephemeral, memory-only version that stores data and secrets in memory. **Please only use this for demo or testing purposes!**
+
+## Deployment
+
+### Helm Chart
+
+To deploy using Helm charts, please refer to the documentation for each variant listed in the [Getting Started](#getting-started) section above. Each chart provides detailed configuration options, prerequisites, and deployment instructions.
+
+> **Note:** This project is still under heavy development. For the most up-to-date deployment experience, it is recommended to follow the [Localhost](#localhost) deployment instructions below.
+
+### Localhost
+
+For detailed deployment instructions in a localhost environment, please refer to the [Installation Guide](./INSTALL.md).
+
+> **Note:** While running the applications natively as Java processes or directly as Docker images is possible, it is highly recommended to deploy using the official Helm charts with PostgreSQL and HashiCorp Vault. The Helm chart deployment ensures proper configuration, security, and scalability.
+
+## Developer Documentation
+
+For developer resources, as well as best practices for development and testing, can be found [in this file](./docs/README.md).
 
 ## License
 
