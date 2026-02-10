@@ -22,18 +22,30 @@ This [directory](./bruno/Eclipse%20Tractus-X%20Identity%20Hub/) contains a [Brun
 1. Launch Postman
 2. Click "File" > "Import"
 3. Navigate to this directory (`/docs/api/postman`) and select the desired collection
-4. The collection will be loaded with all available API endpoints
+4. The collection will be loaded with the DCP Test Workflow
 
 ## API Documentation
 
 ### OpenAPI Specification
 
-A comprehensive OpenAPI specification is available at [openAPI.yaml](openAPI.yaml), which documents all available endpoints, request/response schemas, and authentication requirements.
+A comprehensive OpenAPI specification is available at [openAPI.yaml](openAPI.yaml) and in the bruno collection, which documents all available endpoints, request/response schemas, and authentication requirements.
+
+To start with the bruno collection, import the collection in `/docs/api/bruno` and
+launch the `IdentityHub` and `IssuerService` with helm chart with `postgresql`, `vault` and `ingress` enabled.
 
 ### DCP: Issuance Flow Test
 
 A postman collection that replicates the DCP issuance flow with little user input in a live environment.
-The necessary inputs that the developer has to do is to copy the super-user generated x-api-key and paste it in the script.
+In order to test this workflow, the user needs to deploy both **IdentityHub** and **IssuerService**
+
+The user has to copy generated x-api-key for the super-user that can be obtained from the logs of each component and paste it in the `Set Admin Api Key` call scripts. After that initial call you can run the requests in order and see the result in the request `Get VC by Participant`.
+
+To start with this collection, import the `DCP_IngressPostgresqlTestFlow.json` in `/docs/api/postman` and
+launch the `IdentityHub` and `IssuerService` with helm chart with `postgresql`, `vault` and `ingress` enabled.
+
+### Present Verifiable Presentation
+
+This is a continuation of the [DCP: Issuance Flow Test](#dcp-issuance-flow-test), demonstrating how to wrap a verifiable credential and present it with a verifiable presentation.
 
 To start with this collection, import the `DCP_IngressPostgresqlTestFlow.json` in `/docs/api/postman` and 
 launch the `IdentityHub` and `IssuerService` with helm chart with `postgresql`, `vault` and `ingress` enabled.
