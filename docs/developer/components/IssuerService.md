@@ -1,4 +1,4 @@
-# IssuerService Data Models
+# IssuerService Developer Documentation
 
 The **IssuerService** is responsible for issuing verifiable credentials to holders based on configured rules, attestations, and credential definitions. It implements the issuer role in the [Decentralized Claims Protocol (DCP) Issuance Flow](https://eclipse-dataspace-dcp.github.io/decentralized-claims-protocol/v1.0.1/#issuance-flow), handling credential requests from holders and delivering signed verifiable credentials.
 
@@ -178,16 +178,32 @@ Each issued credential contains a `credentialStatus` object:
 
 ## Data Relationships
 
-```
-ParticipantContext (Issuer)
-    ├── Attestation (many)
-    ├── CredentialDefinition (many)
-    │   └── references → Attestation (many)
-    ├── Holder (many)
-    └── IssuanceProcess (many)
-        ├── references → Holder (one)
-        ├── references → CredentialDefinition (many)
-        └── produces → CredentialResource in IdentityHub (many)
+```mermaid
+flowchart TD
+    PC[ParticipantContext<br/>Issuer]
+    ATT[Attestation]
+    CD[CredentialDefinition]
+    H[Holder]
+    IP[IssuanceProcess]
+    CR[CredentialResource<br/>in IdentityHub]
+
+    PC -->|owns many| ATT
+    PC -->|owns many| CD
+    PC -->|owns many| H
+    PC -->|owns many| IP
+
+    CD -->|references many| ATT
+
+    IP -->|references one| H
+    IP -->|references many| CD
+    IP -->|produces many| CR
+
+    style PC fill:#000000,stroke:#ffffff,color:#ffffff
+    style ATT fill:#000000,stroke:#ffffff,color:#ffffff
+    style CD fill:#000000,stroke:#ffffff,color:#ffffff
+    style H fill:#000000,stroke:#ffffff,color:#ffffff
+    style IP fill:#000000,stroke:#ffffff,color:#ffffff
+    style CR fill:#000000,stroke:#ffffff,color:#ffffff
 ```
 
 **Key Relationships:**
@@ -197,6 +213,26 @@ ParticipantContext (Issuer)
 - All entities are owned by a **ParticipantContext** (the issuer)
 
 ## Data Flow
+
+```mermaid
+sequenceDiagram
+    participant Admin
+    participant IssuerService
+    participant Holder
+
+    Note over Admin,IssuerService: Setup Phase
+    Admin->>IssuerService: Create Attestations & Definitions
+    Admin->>IssuerService: Register Holders
+
+    Note over Holder,IssuerService: Issuance Flow
+    Holder->>IssuerService: Request Credentials (DCP)
+    IssuerService->>IssuerService: Evaluate & Approve
+    IssuerService->>IssuerService: Generate Credentials
+    IssuerService->>Holder: Deliver Credentials
+    Holder->>Holder: Store in IdentityHub
+```
+
+**Detailed Steps:**
 
 1. **Issuer Setup**:
    - Administrator creates **Attestation** for claim validation
@@ -222,7 +258,7 @@ ParticipantContext (Issuer)
    - IssuanceProcess transitions to DELIVERED
 
 5. **Holder Receives Credentials**:
-   - Holder's IdentityHub stores CredentialResources
+   - Holder stores CredentialResources
    - Credentials can be queried, presented, or revoked
    - Holder can use credentials in DCP Presentation Flow
 
@@ -240,3 +276,12 @@ ParticipantContext (Issuer)
   - [Issuance API](https://github.com/eclipse-edc/IdentityHub/tree/main/extensions/api/issuance-api) - DCP credential request endpoint
   - [Issuer Admin API](https://github.com/eclipse-edc/IdentityHub/tree/main/extensions/api/issuer-admin-api) - Manage attestations, definitions, holders, processes
 - **GitHub Repository**: [eclipse-edc/IdentityHub](https://github.com/eclipse-edc/IdentityHub/)
+
+## NOTICE
+
+This work is licensed under the CC-BY-4.0.
+
+- SPDX-License-Identifier: CC-BY-4.0
+- SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+- SPDX-FileCopyrightText: 2026 Contributors to LKS Next
+- Source URL: https://github.com/eclipse-tractusx/tractusx-identityhub
