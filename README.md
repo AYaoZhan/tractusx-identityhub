@@ -22,6 +22,59 @@ This project provides deployable versions of two core components:
 
 Both components implement the Decentralized Claims Protocol (DCP) specification, ensuring interoperability and standardized credential exchange within the Tractus-X ecosystem. The project offers ready-to-deploy Helm charts with PostgreSQL and HashiCorp Vault integration for production environments, as well as memory-based variants for development and testing.
 
+## System Architecture
+
+The Tractus-X IdentityHub consists of two main components that work together to provide complete credential lifecycle management:
+
+```mermaid
+flowchart LR
+    subgraph Issuer["Issuer"]
+        direction TB
+        IS[tractusx-issuerservice<br/>Issuer]
+        IS_DB[(PostgreSQL<br/>Database)]
+        IS_VAULT[HashiCorp Vault<br/>Secret Storage]
+
+        IS -->|Store Data| IS_DB
+        IS -->|Store Secrets| IS_VAULT
+    end
+    subgraph Holder["Holder"]
+        direction TB
+        IH[tractusx-identityhub<br/>Holder]
+        IH_DB[(PostgreSQL<br/>Database)]
+        IH_VAULT[HashiCorp Vault<br/>Secret Storage]
+
+        IH -->|Store Data| IH_DB
+        IH -->|Store Secrets| IH_VAULT
+    end
+    subgraph DataSpace["Data Space Participant"]
+        direction TB
+        CONN[Tractus-X EDC<br/>Connector]
+    end
+    %% Issuance Flow
+    IH <-->|DCP Protocol<br/>Credential Request & Delivery| IS
+    %% Presentation Flow
+    CONN <-->|Presentation Query<br/>/presentation/query| IH
+    style IH fill:#e1f5ff
+    style IS fill:#fff4e1
+    style CONN fill:#d4edda
+    style IH_DB fill:#336791
+    style IS_DB fill:#336791
+    style IH_VAULT fill:#000000,color:#ffffff
+    style IS_VAULT fill:#000000,color:#ffffff
+```
+
+**Key Interactions:**
+
+1. **Credential Issuance (IssuerService ↔ IdentityHub)**:
+   - Holder's IdentityHub requests credentials from IssuerService via DCP Issuance Flow
+   - IssuerService evaluates attestations and rules
+   - Credentials are signed and delivered to holder's IdentityHub for storage
+
+2. **Credential Presentation (Connector ↔ IdentityHub)**:
+   - Tractus-X EDC Connector requests credential presentation via `/presentation/query` endpoint
+   - IdentityHub creates verifiable presentations from stored credentials
+   - Presentations are sent to connector for validation during dataspace interactions
+
 ## Components
 
 ### IdentityHub
