@@ -216,7 +216,6 @@ identityhub:
       # -- EDC endpoints exposed by this ingress resource
       endpoints:
         - identity
-        - version
         - accounts
       # -- Defines the [ingress class](https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-class)  to use
       className: ""
